@@ -1,4 +1,4 @@
-"""django_auth_example URL Configuration
+"""auth_django_inline URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -13,10 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from auth_django_inline import views
 
+app_name = 'auth_django_inline'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('auth-django-inline/', include('auth_django_inline.urls', namespace='auth-django-inline')),
 ]
