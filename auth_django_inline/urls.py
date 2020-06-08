@@ -18,4 +18,5 @@ from auth_django_inline import views
 
 app_name = 'auth_django_inline'
 urlpatterns = [
+    path('', views.home, name='home'),
 ]
