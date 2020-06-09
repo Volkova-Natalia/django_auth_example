@@ -21,4 +21,8 @@ base_url = 'auth-django-inline/'
 namespace = 'auth-django-inline'
 urlpatterns = [
     path('', views.home, name='home'),
+
+    # path('register/', name='register'),
+    # path('login/', name='login'),
+    # path('logout/', name='logout'),
 ]
