@@ -9,4 +9,8 @@ from django.http import HttpResponse
 
 
 class Register(APIView):
-    pass
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
