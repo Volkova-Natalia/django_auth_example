@@ -17,8 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from auth_django_inline.urls import (
+    base_url as auth_django_inline_base_url,
+    namespace as auth_django_inline_namespace
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='django_auth_example/home.html'), name='home'),
-    path('auth-django-inline/', include('auth_django_inline.urls', namespace='auth-django-inline')),
+    path(auth_django_inline_base_url, include('auth_django_inline.urls', namespace=auth_django_inline_namespace)),
 ]
