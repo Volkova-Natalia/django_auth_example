@@ -17,6 +17,8 @@ from django.urls import path
 from auth_django_inline import views
 
 app_name = 'auth_django_inline'
+base_url = 'auth-django-inline/'
+namespace = 'auth-django-inline'
 urlpatterns = [
     path('', views.home, name='home'),
 ]
