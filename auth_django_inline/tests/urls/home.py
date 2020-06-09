@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 
-from ...urls import base_url, namespace
+from ...urls import base_url, namespace, app_name
 
 
 # Create your tests here.
@@ -11,9 +11,11 @@ class HomeTestCase(TestCase):
 
     url_expected = '/' + base_url_expected + ''  # '/auth-django-inline/'
     view_expected = namespace_expected + ':' + 'home'   # 'auth-django-inline:home'
+    func_expected = app_name + '.' + 'views.home.' + 'home'
 
     url = reverse(namespace + ':home')
     view = resolve(url).view_name
+    func = resolve(url)._func_path
 
     @classmethod
     def setUpTestData(cls):
@@ -38,5 +40,8 @@ class HomeTestCase(TestCase):
 
     def test_view(self):
         self.assertEquals(self.view, self.view_expected)
+
+    def test_func(self):
+        self.assertEquals(self.func, self.func_expected)
 
     # ======================================================================
