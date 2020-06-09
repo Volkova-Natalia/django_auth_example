@@ -8,7 +8,7 @@ from rest_framework import status
 from django.http import HttpResponse
 
 
-class Register(APIView):
+class Registration(APIView):
     def get(self, request, *args, **kwargs):
         pass
 

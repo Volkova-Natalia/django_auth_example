@@ -8,7 +8,7 @@ from ...urls import namespace
 
 
 # Create your tests here.
-class RegisterTestCase(TestCase):
+class RegistrationTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         pass

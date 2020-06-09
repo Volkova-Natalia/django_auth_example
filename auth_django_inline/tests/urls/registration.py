@@ -5,15 +5,15 @@ from ...urls import base_url, namespace, app_name
 
 
 # Create your tests here.
-class RegisterTestCase(TestCase):
+class RegistrationTestCase(TestCase):
     base_url_expected = 'auth-django-inline/'
     namespace_expected = 'auth-django-inline'
 
-    url_expected = '/' + base_url_expected + 'register/'  # '/auth-django-inline/register/'
-    view_expected = namespace_expected + ':' + 'register'   # 'auth-django-inline:register'
-    func_expected = app_name + '.' + 'views.register.' + 'Register'
+    url_expected = '/' + base_url_expected + 'registration/'  # '/auth-django-inline/registration/'
+    view_expected = namespace_expected + ':' + 'registration'   # 'auth-django-inline:registration'
+    func_expected = app_name + '.' + 'views.registration.' + 'Registration'
 
-    url = reverse(namespace + ':register')
+    url = reverse(namespace + ':registration')
     view = resolve(url).view_name
     func = resolve(url)._func_path
 
