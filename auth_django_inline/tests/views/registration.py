@@ -84,7 +84,6 @@ class RegistrationTestCase(TestCase):
             data=data_post,
             content_type='application/json'
         )
-        print('response  ', response)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         self._test_template(response, 'auth_django_inline/registration.html')
@@ -104,7 +103,6 @@ class RegistrationTestCase(TestCase):
             else:
                 self.assertNotEquals(getattr(user, field), data_post[field])
                 self.assertEquals(user.check_password(data_post[field]), True)
-        print('')
 
     def test_post_user_exists_clean(self):
         username = 'username_000'
@@ -126,7 +124,6 @@ class RegistrationTestCase(TestCase):
             data=data_post,
             content_type='application/json'
         )
-        print('response  ', response)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         self._test_template(response, 'auth_django_inline/registration.html')
@@ -138,7 +135,6 @@ class RegistrationTestCase(TestCase):
         count_users_expected = 1
         count_users = User.objects.count()
         self.assertEquals(count_users, count_users_expected)
-        print('')
 
     # ======================================================================
     # dirty

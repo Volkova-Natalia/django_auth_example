@@ -7,7 +7,6 @@ class RegistrationLoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
     def get_user(self, username):
-        print('RegistrationLoginForm.get_user(', username, ')', sep='')
         try:
             user = User.objects.get(username=username)
             return user
@@ -15,7 +14,6 @@ class RegistrationLoginForm(forms.Form):
             return None
 
     def is_user_exists(self, username):
-        print('RegistrationLoginForm.is_user_exists(', username, ')', sep='')
         if self.get_user(username):
             return True
         else:
