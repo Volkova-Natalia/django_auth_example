@@ -68,11 +68,7 @@ class RegistrationTestCase(CommonTestCase):
         )
         return response, form_expected, form_valid_expected
 
-    def test_post_successful_registration_clean(self):
-        data_post = self.registered_user.copy()
-        data_post['username'] = data_post['username'] + '_another'
-        data_post['password'] = data_post['password'] + '_another'
-        response, form_expected, form_valid_expected = self._post(data_post)
+    def _test_post_successful_registration(self, response, form_expected, form_valid_expected):
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         self._test_template(response, 'auth_django_inline/registration.html')
@@ -80,6 +76,23 @@ class RegistrationTestCase(CommonTestCase):
         self._test_form(response, form_expected)
         self._test_action(response, 'registration')
         self._test_message(response, 'You successfully registered.')
+
+    def _test_post_failed_registration(self, response, form_expected, form_valid_expected):
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        self._test_template(response, 'auth_django_inline/registration.html')
+        self.assertEquals(form_valid_expected, False)
+        self._test_form(response, form_expected)
+        self._test_action(response, 'registration')
+        self._test_message(response, None)
+
+    def test_post_successful_registration_clean(self):
+        data_post = self.registered_user.copy()
+        data_post['username'] = data_post['username'] + '_another'
+        data_post['password'] = data_post['password'] + '_another'
+        response, form_expected, form_valid_expected = self._post(data_post)
+
+        self._test_post_successful_registration(response, form_expected, form_valid_expected)
 
         count_users_expected = 2
         count_users = User.objects.count()
@@ -97,13 +110,8 @@ class RegistrationTestCase(CommonTestCase):
         data_post = self.registered_user.copy()
         data_post['password'] = data_post['password'] + '_another'
         response, form_expected, form_valid_expected = self._post(data_post)
-        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-        self._test_template(response, 'auth_django_inline/registration.html')
-        self.assertEquals(form_valid_expected, False)
-        self._test_form(response, form_expected)
-        self._test_action(response, 'registration')
-        self._test_message(response, None)
+        self._test_post_failed_registration(response, form_expected, form_valid_expected)
 
         count_users_expected = 1
         count_users = User.objects.count()
