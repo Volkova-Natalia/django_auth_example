@@ -4,13 +4,15 @@ from rest_framework import status
 from django.shortcuts import render
 from django.urls import reverse
 
+from .common import CommonTestCase
+
 from ...urls import namespace
 from ...forms import RegistrationForm
 from django.contrib.auth.models import User
 
 
 # Create your tests here.
-class RegistrationTestCase(TestCase):
+class RegistrationTestCase(CommonTestCase):
     url = reverse(namespace + ':registration')
 
     @classmethod
@@ -24,34 +26,6 @@ class RegistrationTestCase(TestCase):
         pass
 
     # ======================================================================
-
-    def _test_template(self, response, template_expected):
-        try:
-            template = response.templates[0].name
-        except:
-            template = None
-        self.assertEquals(template, template_expected)
-
-    def _test_form(self, response, form_expected):
-        try:
-            form = response.context['form']
-        except KeyError:
-            form = None
-        self.assertEquals(str(form), str(form_expected))
-
-    def _test_action(self, response, action_expected):
-        try:
-            action = response.context['action']
-        except KeyError:
-            action = None
-        self.assertEquals(action, action_expected)
-
-    def _test_message(self, response, message_expected):
-        try:
-            message = response.context['message']
-        except KeyError:
-            message = None
-        self.assertEquals(message, message_expected)
 
     # ======================================================================
     # clean
