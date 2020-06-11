@@ -9,6 +9,7 @@ from .common import CommonTestCase
 from ...urls import namespace
 from ...forms import LoginForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 
 # Create your tests here.
@@ -75,6 +76,10 @@ class LoginTestCase(CommonTestCase):
         self._test_action(response, 'login')
         self._test_message(response, 'You successfully logged.')
 
+        user = authenticate(username=data_post['username'], password=data_post['password'])
+        self.assertNotEquals(user, None)
+        self.assertEquals(user.is_active, True)
+
     def _test_post_failed_login(self, response, data_post):
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -85,6 +90,9 @@ class LoginTestCase(CommonTestCase):
         self._test_form(response, form_expected)
         self._test_action(response, 'login')
         self._test_message(response, None)
+
+        user = authenticate(username=data_post['username'], password=data_post['password'])
+        self.assertEquals(user, None)
 
     def test_post_successful_login_clean(self):
         data_post = self.registered_user.copy()
