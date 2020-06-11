@@ -5,13 +5,14 @@ from django.contrib.auth.models import User
 
 class RegistrationForm(RegistrationLoginForm):
     def clean_username(self):
-        if self.is_user_exists(self.cleaned_data['username']):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
             raise forms.ValidationError(
                 'The user with the name exists.',
                 code='user_exists'
             )
         else:
-            return self.cleaned_data['username']
+            return username
 
     def save(self):
         user = User.objects.create_user(username=self.cleaned_data['username'],
