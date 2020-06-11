@@ -15,6 +15,11 @@ from django.contrib.auth.models import User
 class RegistrationTestCase(CommonTestCase):
     url = reverse(namespace + ':registration')
 
+    registered_user = {
+        'username': 'username_000',
+        'password': 'password_000',
+    }
+
     @classmethod
     def setUpTestData(cls):
         pass
@@ -45,19 +50,29 @@ class RegistrationTestCase(CommonTestCase):
 
     # ----- POST -----
 
-    def test_post_successful_registration_clean(self):
-        data_post = {
-            'username': 'username_000',
-            'password': 'password_000',
-        }
+    def _post(self, data_post=registered_user.copy()):
+        user = User.objects.create_user(
+            username=self.registered_user['username'],
+            password=self.registered_user['password'],
+        )
+        user.save()
+
         form_expected = RegistrationForm(data_post)
         form_valid_expected = form_expected.is_valid()
+
         client = Client()
         response = client.post(
             path=self.url,
             data=data_post,
             content_type='application/json'
         )
+        return response, form_expected, form_valid_expected
+
+    def test_post_successful_registration_clean(self):
+        data_post = self.registered_user.copy()
+        data_post['username'] = data_post['username'] + '_another'
+        data_post['password'] = data_post['password'] + '_another'
+        response, form_expected, form_valid_expected = self._post(data_post)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         self._test_template(response, 'auth_django_inline/registration.html')
@@ -66,7 +81,7 @@ class RegistrationTestCase(CommonTestCase):
         self._test_action(response, 'registration')
         self._test_message(response, 'You successfully registered.')
 
-        count_users_expected = 1
+        count_users_expected = 2
         count_users = User.objects.count()
         self.assertEquals(count_users, count_users_expected)
 
@@ -79,25 +94,9 @@ class RegistrationTestCase(CommonTestCase):
                 self.assertEquals(user.check_password(data_post[field]), True)
 
     def test_post_user_exists_clean(self):
-        username = 'username_000'
-        user = User.objects.create_user(
-            username=username,
-            password='password_000'
-        )
-        user.save()
-
-        data_post = {
-            'username': username,
-            'password': 'password_001',
-        }
-        form_expected = RegistrationForm(data_post)
-        form_valid_expected = form_expected.is_valid()
-        client = Client()
-        response = client.post(
-            path=self.url,
-            data=data_post,
-            content_type='application/json'
-        )
+        data_post = self.registered_user.copy()
+        data_post['password'] = data_post['password'] + '_another'
+        response, form_expected, form_valid_expected = self._post(data_post)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         self._test_template(response, 'auth_django_inline/registration.html')
