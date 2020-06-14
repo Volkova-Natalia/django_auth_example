@@ -52,9 +52,14 @@ class IntegrationTestCase(TestCase):
         response = client.get(url)
         return response
 
-    def _post(self):
-        pass
-        # TODO
+    def _post(self, url='', user=test_user.copy()):
+        client = Client()
+        response = client.post(
+            path=url,
+            data=user,
+            content_type='application/json'
+        )
+        return response
 
     # ======================================================================
 
@@ -64,14 +69,16 @@ class IntegrationTestCase(TestCase):
         response = self._get(self.url['registration'])
         return response
 
-    def _post_registration(self):
-        pass
-        # TODO
+    def _post_registration(self, user=test_user.copy()):
+        response = self._post(self.url['registration'], user)
+        return response
 
-    def _registration(self, user):
+    def _registration(self, user=test_user.copy()):
         response = self._get_registration()
         self._test_get_registration(response)
-        # TODO
+
+        response = self._post_registration(user)
+        self._test_post_registration(response)
 
     # ----- login -----
 
@@ -79,14 +86,16 @@ class IntegrationTestCase(TestCase):
         response = self._get(self.url['login'])
         return response
 
-    def _post_login(self):
-        pass
-        # TODO
+    def _post_login(self, user=test_user.copy()):
+        response = self._post(self.url['login'], user)
+        return response
 
-    def _login(self, user):
+    def _login(self, user=test_user.copy()):
         response = self._get_login()
         self._test_get_login(response)
-        # TODO
+
+        response = self._post_login(user)
+        self._test_post_login(response)
 
     # ----- logout -----
 
@@ -94,14 +103,16 @@ class IntegrationTestCase(TestCase):
         response = self._get(self.url['logout'])
         return response
 
-    def _post_logout(self):
-        pass
-        # TODO
+    def _post_logout(self, user=test_user.copy()):
+        response = self._post(self.url['logout'], user)
+        return response
 
-    def _logout(self, user):
+    def _logout(self, user=test_user.copy()):
         response = self._get_logout()
         self._test_get_logout(response)
-        # TODO
+
+        response = self._post_logout(user)
+        self._test_post_logout(response)
 
     # ======================================================================
 
@@ -115,7 +126,7 @@ class IntegrationTestCase(TestCase):
         pass
         # TODO
 
-    def _test_registration(self, user):
+    def _test_registration(self, user=test_user.copy()):
         pass
         # TODO
 
@@ -129,7 +140,7 @@ class IntegrationTestCase(TestCase):
         pass
         # TODO
 
-    def _test_login(self, user):
+    def _test_login(self, user=test_user.copy()):
         pass
         # TODO
 
@@ -143,7 +154,7 @@ class IntegrationTestCase(TestCase):
         pass
         # TODO
 
-    def _test_logout(self, user):
+    def _test_logout(self, user=test_user.copy()):
         pass
         # TODO
 
