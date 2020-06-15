@@ -4,7 +4,7 @@ from rest_framework import status
 from django.shortcuts import render
 from django.urls import reverse
 
-from .common import CommonTestCase
+from ..common import CommonTestCase
 
 from ...urls import namespace
 from ...forms import LoginForm
