@@ -51,21 +51,23 @@ class IntegrationRegistrationTestCase(IntegrationCommonTestCase):
     # ======================================================================
 
     def _test_get(self, response):
-        assert_message = 'integration registration get'
-        self.assertEquals(response.status_code, status.HTTP_200_OK, assert_message)
-        self._test_template(response, self.template_expected, assert_message)
-        self._test_form(response, self.form_expected['get'], assert_message)
-        self._test_action(response, self.action_expected, assert_message)
-        self._test_message(response, self.message_expected['get'], assert_message)
+        assert_message = 'integration registration GET'
+        self.assertEquals(response.status_code, status.HTTP_200_OK, assert_message + ' test status_code')
+
+        self._test_template(response, self.template_expected, assert_message + ' test template')
+        self._test_form(response, self.form_expected['get'], assert_message + ' test form')
+        self._test_action(response, self.action_expected, assert_message + ' test action')
+        self._test_message(response, self.message_expected['get'], assert_message + ' test message')
 
     def _test_post(self, response):
-        assert_message = 'integration registration post'
-        self.assertEquals(response.status_code, status.HTTP_200_OK, assert_message)
-        self._test_template(response, self.template_expected, assert_message)
-        self._test_form(response, self.form_expected['post'], assert_message)
-        self.assertEquals(self.form_valid_expected, True, assert_message)
-        self._test_action(response, self.action_expected, assert_message)
-        self._test_message(response, self.message_expected['post']['success'], assert_message)
+        assert_message = 'integration registration POST'
+        self.assertEquals(response.status_code, status.HTTP_200_OK, assert_message + ' test status_code')
+
+        self._test_template(response, self.template_expected, assert_message + ' test template')
+        self.assertEquals(self.form_valid_expected, True, assert_message + ' test form_valid')
+        self._test_form(response, self.form_expected['post'], assert_message + ' test form')
+        self._test_action(response, self.action_expected, assert_message + ' test action')
+        self._test_message(response, self.message_expected['post']['success'], assert_message + ' test message')
 
     # ======================================================================
 

@@ -49,12 +49,12 @@ class IntegrationLogoutTestCase(IntegrationCommonTestCase):
     # ======================================================================
 
     def _test_get(self, response):
-        assert_message = 'integration logout get'
+        assert_message = 'integration logout GET'
         pass
         # TODO
 
     def _test_post(self, response):
-        assert_message = 'integration logout post'
+        assert_message = 'integration logout POST'
         pass
         # TODO
 
