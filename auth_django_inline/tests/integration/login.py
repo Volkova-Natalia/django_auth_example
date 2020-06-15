@@ -30,6 +30,12 @@ class IntegrationLoginTestCase(IntegrationCommonTestCase):
 
     # ======================================================================
 
+    def __init__(self, user=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    # ======================================================================
+
     @classmethod
     def setUpTestData(cls):
         pass
@@ -54,18 +60,17 @@ class IntegrationLoginTestCase(IntegrationCommonTestCase):
 
     # ======================================================================
 
-    def execute(self, user=None):
+    def execute(self):
         response = self.get()
         self._test_get(response)
 
-        response = self.post(user)
+        response = self.post(self.user)
         self._test_post(response)
 
     # ======================================================================
 
-    def test(self, user=None):
+    def test(self):
         assert_message = 'integration login'
-        print('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! integration login\n')
         pass
         # TODO
 

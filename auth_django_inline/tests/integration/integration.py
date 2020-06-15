@@ -6,10 +6,6 @@ from .logout import IntegrationLogoutTestCase
 
 # Create your tests here.
 class IntegrationTestCase(IntegrationCommonTestCase):
-    registration = IntegrationRegistrationTestCase()
-    login = IntegrationLoginTestCase()
-    logout = IntegrationLogoutTestCase()
-
     test_user = {
         'username': 'username_test',
         'password': 'password_test',
@@ -32,14 +28,18 @@ class IntegrationTestCase(IntegrationCommonTestCase):
     # ======================================================================
 
     def test_registration_login_logout_clean(self):
-        self.registration.execute(self.test_user)
-        self.registration.test(self.test_user)
+        registration = IntegrationRegistrationTestCase(user=self.test_user)
+        login = IntegrationLoginTestCase(user=self.test_user)
+        logout = IntegrationLogoutTestCase(user=self.test_user)
 
-        self.login.execute(self.test_user)
-        self.login.test(self.test_user)
+        registration.execute()
+        registration.test()
 
-        self.logout.execute(self.test_user)
-        self.logout.test(self.test_user)
+        login.execute()
+        login.test()
+
+        logout.execute()
+        logout.test()
 
     # ======================================================================
     # dirty

@@ -15,7 +15,7 @@ class IntegrationRegistrationTestCase(IntegrationCommonTestCase):
 
     form_expected = {
         'get': RegistrationForm,
-        'post': None,   # TODO
+        'post': RegistrationForm,
     }
 
     action_expected = 'registration'
@@ -27,6 +27,14 @@ class IntegrationRegistrationTestCase(IntegrationCommonTestCase):
             'fail': None,
         }
     }
+
+    # ======================================================================
+
+    def __init__(self, user=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+        self.form_expected['post'] = self.form_expected['post'](self.user)
+        self.form_valid_expected = self.form_expected['post'].is_valid()
 
     # ======================================================================
 
@@ -52,23 +60,26 @@ class IntegrationRegistrationTestCase(IntegrationCommonTestCase):
 
     def _test_post(self, response):
         assert_message = 'integration registration post'
-        pass
-        # TODO
+        self.assertEquals(response.status_code, status.HTTP_200_OK, assert_message)
+        self._test_template(response, self.template_expected, assert_message)
+        self._test_form(response, self.form_expected['post'], assert_message)
+        self.assertEquals(self.form_valid_expected, True, assert_message)
+        self._test_action(response, self.action_expected, assert_message)
+        self._test_message(response, self.message_expected['post']['success'], assert_message)
 
     # ======================================================================
 
-    def execute(self, user=None):
+    def execute(self):
         response = self.get()
         self._test_get(response)
 
-        response = self.post(user)
+        response = self.post(self.user)
         self._test_post(response)
 
     # ======================================================================
 
-    def test(self, user=None):
+    def test(self):
         assert_message = 'integration registration'
-        print('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! integration registration\n')
         pass
         # TODO
 
