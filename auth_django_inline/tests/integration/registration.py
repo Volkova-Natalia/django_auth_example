@@ -11,11 +11,24 @@ from ...forms import RegistrationForm
 class IntegrationRegistrationTestCase(IntegrationCommonTestCase):
     url = reverse(namespace + ':registration')
 
+    status_code_expected = {
+        'get': status.HTTP_200_OK,
+        'post': {
+            'success': status.HTTP_200_OK,
+            'fail': None,   # TODO
+        }
+    }
+
     template_expected = 'auth_django_inline/registration.html'
 
     form_expected = {
         'get': RegistrationForm,
         'post': RegistrationForm,
+    }
+
+    form_valid_expected = {
+        'get': None,
+        'post': None,
     }
 
     action_expected = 'registration'
@@ -31,10 +44,9 @@ class IntegrationRegistrationTestCase(IntegrationCommonTestCase):
     # ======================================================================
 
     def __init__(self, user=None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.user = user
+        super().__init__(user=user, *args, **kwargs)
         self.form_expected['post'] = self.form_expected['post'](self.user)
-        self.form_valid_expected = self.form_expected['post'].is_valid()
+        self.form_valid_expected['post'] = self.form_expected['post'].is_valid()
 
     # ======================================================================
 
@@ -52,22 +64,11 @@ class IntegrationRegistrationTestCase(IntegrationCommonTestCase):
 
     def _test_get(self, response):
         assert_message = 'integration registration GET'
-        self.assertEquals(response.status_code, status.HTTP_200_OK, assert_message + ' test status_code')
-
-        self._test_template(response, self.template_expected, assert_message + ' test template')
-        self._test_form(response, self.form_expected['get'], assert_message + ' test form')
-        self._test_action(response, self.action_expected, assert_message + ' test action')
-        self._test_message(response, self.message_expected['get'], assert_message + ' test message')
+        super()._test_get(response, assert_message)
 
     def _test_post(self, response):
         assert_message = 'integration registration POST'
-        self.assertEquals(response.status_code, status.HTTP_200_OK, assert_message + ' test status_code')
-
-        self._test_template(response, self.template_expected, assert_message + ' test template')
-        self.assertEquals(self.form_valid_expected, True, assert_message + ' test form_valid')
-        self._test_form(response, self.form_expected['post'], assert_message + ' test form')
-        self._test_action(response, self.action_expected, assert_message + ' test action')
-        self._test_message(response, self.message_expected['post']['success'], assert_message + ' test message')
+        super()._test_post(response, assert_message)
 
     # ======================================================================
 

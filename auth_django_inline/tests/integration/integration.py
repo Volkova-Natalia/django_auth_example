@@ -1,11 +1,12 @@
-from .common import IntegrationCommonTestCase
+from django.test import TestCase
+
 from .registration import IntegrationRegistrationTestCase
 from .login import IntegrationLoginTestCase
 from .logout import IntegrationLogoutTestCase
 
 
 # Create your tests here.
-class IntegrationTestCase(IntegrationCommonTestCase):
+class IntegrationTestCase(TestCase):
     test_user = {
         'username': 'username_test',
         'password': 'password_test',
