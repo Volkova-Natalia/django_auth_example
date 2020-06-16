@@ -4,7 +4,6 @@ from django.urls import reverse
 from ..common import CommonTestCase
 
 from ....settings import namespace
-# from ....forms import LogutForm
 
 
 # Create your tests here.
@@ -12,32 +11,81 @@ class BaseLogoutTestCase(CommonTestCase):
     url = reverse(namespace + ':logout')
 
     status_code_expected = {
-        'get': status.HTTP_200_OK,
+        'get': {
+            'success': status.HTTP_200_OK,
+            'fail': status.HTTP_302_FOUND,
+        },
         'post': {
             'success': status.HTTP_200_OK,
-            'fail': None,   # TODO
+            'fail': status.HTTP_302_FOUND,
         }
     }
 
-    template_expected = 'auth_django_inline/logout.html'
+    _template_expected = 'auth_django_inline/logout.html'
+    template_expected = {
+        'get': {
+            'success': _template_expected,
+            'fail': None,   # TODO
+        },
+        'post': {
+            'success': _template_expected,
+            'fail': _template_expected,
+        }
+    }
 
     form_expected = {
-        'get': None,   # TODO
-        'post': None,   # TODO
+        'get': {
+            'success': None,
+            'fail': None,
+        },
+        'post': {
+            'success': None,
+            'fail': None,
+        }
     }
 
-    form_valid_expected = {
-        'get': None,
-        'post': None,
+    form_expected_valid = {
+        'get': {
+            'success': None,
+            'fail': None,
+        },
+        'post': {
+            'success': None,
+            'fail': None,
+        }
     }
 
-    action_expected = 'logout'
+    form_expected_valid_expected = {
+        'get': {
+            'success': None,
+            'fail': None,
+        },
+        'post': {
+            'success': None,
+            'fail': None,
+        }
+    }
+
+    _action_expected = 'logout'
+    action_expected = {
+        'get': {
+            'success': _action_expected,
+            'fail': _action_expected,
+        },
+        'post': {
+            'success': _action_expected,
+            'fail': _action_expected,
+        }
+    }
 
     message_expected = {
-        'get': None,    # TODO
+        'get': {
+            'success': None,
+            'fail': None,
+        },
         'post': {
-            'success': None,    # TODO,
-            'fail': None,   # TODO
+            'success': 'You successfully logged out.',
+            'fail': None,
         }
     }
 
