@@ -41,7 +41,7 @@ class LoginTestCase(TestCase):
 
     def test_get_clean(self):
         login = BaseLoginTestCase()
-        client, response = login.get()
+        client, response = login.get(client=None)
         login._test_get(response, success_fail='success', assert_message='views')
 
     # ----- POST -----
@@ -51,7 +51,7 @@ class LoginTestCase(TestCase):
         data_post = self.registered_user.copy()
 
         login = BaseLoginTestCase(data_post)
-        client, response = login.post()
+        client, response = login.post(client=None)
         login._test_post(response, success_fail='success', assert_message='views')
 
     def test_post_user_is_not_correct_clean(self):
@@ -60,7 +60,7 @@ class LoginTestCase(TestCase):
         data_post['username'] = data_post['username'] + '_another'
 
         login = BaseLoginTestCase(data_post)
-        client, response = login.post()
+        client, response = login.post(client=None)
         login._test_post(response, success_fail='fail', assert_message='views')
 
     def test_post_password_is_not_correct_clean(self):
@@ -69,7 +69,7 @@ class LoginTestCase(TestCase):
         data_post['password'] = data_post['password'] + '_another'
 
         login = BaseLoginTestCase(data_post)
-        client, response = login.post()
+        client, response = login.post(client=None)
         login._test_post(response, success_fail='fail', assert_message='views')
 
     def test_post_user_password_is_not_correct_clean(self):
@@ -79,7 +79,7 @@ class LoginTestCase(TestCase):
         data_post['password'] = data_post['password'] + '_another'
 
         login = BaseLoginTestCase(data_post)
-        client, response = login.post()
+        client, response = login.post(client=None)
         login._test_post(response, success_fail='fail', assert_message='views')
 
     # ======================================================================

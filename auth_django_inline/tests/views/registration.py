@@ -41,7 +41,7 @@ class RegistrationTestCase(TestCase):
 
     def test_get_clean(self):
         registration = BaseRegistrationTestCase()
-        client, response = registration.get()
+        client, response = registration.get(client=None)
         registration._test_get(response, success_fail='success', assert_message='views')
 
     # ----- POST -----
@@ -54,7 +54,7 @@ class RegistrationTestCase(TestCase):
         data_post['password'] = data_post['password'] + '_another'
 
         registration = BaseRegistrationTestCase(data_post)
-        client, response = registration.post()
+        client, response = registration.post(client=None)
         registration._test_post(response, success_fail='success', assert_message='views')
 
         count_users_expected = 2
@@ -76,7 +76,7 @@ class RegistrationTestCase(TestCase):
         data_post['password'] = data_post['password'] + '_another'
 
         registration = BaseRegistrationTestCase(data_post)
-        client, response = registration.post()
+        client, response = registration.post(client=None)
         registration._test_post(response, success_fail='fail', assert_message='views')
 
         count_users_expected = 1
