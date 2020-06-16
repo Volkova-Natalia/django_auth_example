@@ -33,13 +33,14 @@ class IntegrationTestCase(TestCase):
         login = IntegrationLoginTestCase(user=self.test_user)
         logout = IntegrationLogoutTestCase(user=self.test_user)
 
-        registration.execute()
+        client = None
+        client = registration.execute(client=client)
         registration.test()
 
-        login.execute()
+        client = login.execute(client=client)
         login.test()
 
-        logout.execute()
+        client = logout.execute(client=client)
         logout.test()
 
     # ======================================================================

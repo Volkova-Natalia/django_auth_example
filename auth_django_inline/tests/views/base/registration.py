@@ -113,13 +113,13 @@ class BaseRegistrationTestCase(CommonTestCase):
 
     # ======================================================================
 
-    def get(self):
-        response = super().get(self.url)
-        return response
+    def get(self, client=None):
+        client, response = super().get(client=client, url=self.url)
+        return client, response
 
-    def post(self):
-        response = super().post(self.url, self.user)
-        return response
+    def post(self, client=None):
+        client, response = super().post(client=client, url=self.url, data=self.user)
+        return client, response
 
     # ======================================================================
 

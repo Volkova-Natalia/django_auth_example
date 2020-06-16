@@ -103,19 +103,21 @@ class CommonTestCase(TestCase):
 
     # ======================================================================
 
-    def get(self, url=''):
-        client = Client()
+    def get(self, client=None, url=''):
+        if not client:
+            client = Client()
         response = client.get(url)
-        return response
+        return client, response
 
-    def post(self, url='', data=None):
-        client = Client()
+    def post(self, client=None, url='', data=None):
+        if not client:
+            client = Client()
         response = client.post(
             path=url,
             data=data,
             content_type='application/json'
         )
-        return response
+        return client, response
 
     # ======================================================================
 

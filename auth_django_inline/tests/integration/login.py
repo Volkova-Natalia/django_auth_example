@@ -18,12 +18,14 @@ class IntegrationLoginTestCase(BaseLoginTestCase):
 
     # ======================================================================
 
-    def execute(self):
-        response = self.get()
+    def execute(self, client=None):
+        client, response = self.get(client=client)
         self._test_get(response, success_fail='success', assert_message='integration')
 
-        response = self.post()
+        client, response = self.post(client=client)
         self._test_post(response, success_fail='success', assert_message='integration')
+
+        return client
 
     # ======================================================================
 
