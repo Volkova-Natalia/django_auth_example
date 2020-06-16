@@ -13,29 +13,78 @@ class BaseLoginTestCase(CommonTestCase):
     url = reverse(namespace + ':login')
 
     status_code_expected = {
-        'get': status.HTTP_200_OK,
+        'get': {
+            'success': status.HTTP_200_OK,
+            'fail': None,   # TODO
+        },
         'post': {
             'success': status.HTTP_200_OK,
             'fail': None,   # TODO
         }
     }
 
-    template_expected = 'auth_django_inline/login.html'
+    _template_expected = 'auth_django_inline/login.html'
+    template_expected = {
+        'get': {
+            'success': _template_expected,
+            'fail': None,   # TODO
+        },
+        'post': {
+            'success': _template_expected,
+            'fail': _template_expected,
+        }
+    }
 
     form_expected = {
-        'get': LoginForm,
-        'post': LoginForm,
+        'get': {
+            'success': LoginForm,
+            'fail': None,   # TODO
+        },
+        'post': {
+            'success': LoginForm,
+            'fail': LoginForm,
+        }
     }
 
-    form_valid_expected = {
-        'get': None,
-        'post': None,
+    form_expected_valid = {
+        'get': {
+            'success': None,
+            'fail': None,
+        },
+        'post': {
+            'success': None,
+            'fail': None,
+        }
     }
 
-    action_expected = 'login'
+    form_expected_valid_expected = {
+        'get': {
+            'success': None,
+            'fail': None,
+        },
+        'post': {
+            'success': True,
+            'fail': None,
+        }
+    }
+
+    _action_expected = 'login'
+    action_expected = {
+        'get': {
+            'success': _action_expected,
+            'fail': _action_expected,
+        },
+        'post': {
+            'success': _action_expected,
+            'fail': _action_expected,
+        }
+    }
 
     message_expected = {
-        'get': None,
+        'get': {
+            'success': None,
+            'fail': None,
+        },
         'post': {
             'success': 'You successfully logged.',
             'fail': None,
@@ -75,8 +124,9 @@ class BaseLoginTestCase(CommonTestCase):
     def _test_post(self, response, assert_message=''):
         assert_message = assert_message + ' login POST'
         # self.form_expected['post'] = self.form_expected['post'](self.user)
-        self.form_expected['post'] = LoginForm(self.user)
-        self.form_valid_expected['post'] = self.form_expected['post'].is_valid()
+        self.form_expected['post']['success'] = LoginForm(self.user)
+        # self.form_valid_expected['post'] = self.form_expected['post'].is_valid()
+        self.form_expected_valid['post']['success'] = self.form_expected['post']['success'].is_valid()
         super()._test_post(response, assert_message)
 
         user = authenticate(username=self.user['username'], password=self.user['password'])
