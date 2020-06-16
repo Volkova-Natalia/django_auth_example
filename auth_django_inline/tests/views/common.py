@@ -119,6 +119,18 @@ class CommonTestCase(TestCase):
         )
         return client, response
 
+    def client_login(self, client=None, user={'username': '', 'password': ''}):
+        if not client:
+            client = Client()
+        login = client.login(username=user['username'], password=user['password'])
+        return client, login
+
+    def client_logout(self, client=None, user={'username': '', 'password': ''}):
+        if not client:
+            client = Client()
+        logout = client.logout(username=user['username'], password=user['password'])
+        return client, logout
+
     # ======================================================================
 
     def _test_template(self, response, template_expected, assert_message=None):
@@ -131,21 +143,21 @@ class CommonTestCase(TestCase):
     def _test_form(self, response, form_expected, assert_message=None):
         try:
             form = response.context['form']
-        except KeyError:
+        except:
             form = None
         self.assertEquals(str(form), str(form_expected), assert_message)
 
     def _test_action(self, response, action_expected, assert_message=None):
         try:
             action = response.context['action']
-        except KeyError:
+        except:
             action = None
         self.assertEquals(action, action_expected, assert_message)
 
     def _test_message(self, response, message_expected, assert_message=None):
         try:
             message = response.context['message']
-        except KeyError:
+        except:
             message = None
         self.assertEquals(message, message_expected, assert_message)
 

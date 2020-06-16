@@ -12,6 +12,8 @@ class LoginTestCase(TestCase):
         'password': 'password_000',
     }
 
+    # ======================================================================
+
     @classmethod
     def setUpTestData(cls):
         pass

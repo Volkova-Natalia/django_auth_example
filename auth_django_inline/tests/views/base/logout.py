@@ -70,11 +70,11 @@ class BaseLogoutTestCase(CommonTestCase):
     action_expected = {
         'get': {
             'success': _action_expected,
-            'fail': _action_expected,
+            'fail': None,
         },
         'post': {
             'success': _action_expected,
-            'fail': _action_expected,
+            'fail': None,
         }
     }
 
@@ -115,11 +115,10 @@ class BaseLogoutTestCase(CommonTestCase):
 
     def _test_get(self, response, success_fail, assert_message=''):
         assert_message = assert_message + ' ' + success_fail + ' logout GET'
-        # super()._test_get(response, success_fail, assert_message)
+        super()._test_get(response, success_fail, assert_message)
 
     def _test_post(self, response, success_fail, assert_message=''):
         assert_message = assert_message + ' ' + success_fail + ' logout POST'
-        # super()._test_post(response, success_fail, assert_message)
-        # TODO
+        super()._test_post(response, success_fail, assert_message)
 
     # ======================================================================
