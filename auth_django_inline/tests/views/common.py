@@ -149,23 +149,50 @@ class CommonTestCase(TestCase):
 
     # ======================================================================
 
-    def _test_get(self, response, assert_message=''):
+    def _test_get(self, response, success_fail, assert_message=''):
         self.assertEquals(response.status_code,
-                          self.status_code_expected['get']['success'],
+                          self.status_code_expected['get'][success_fail],
                           assert_message + ' test status_code')
-        self._test_template(response, self.template_expected['get']['success'], assert_message + ' test template')
-        self._test_form(response, self.form_expected['get']['success'], assert_message + ' test form')
-        self._test_action(response, self.action_expected['get']['success'], assert_message + ' test action')
-        self._test_message(response, self.message_expected['get']['success'], assert_message + ' test message')
 
-    def _test_post(self, response, assert_message=''):
+        self._test_template(response,
+                            self.template_expected['get'][success_fail],
+                            assert_message + ' test template')
+
+        self._test_form(response,
+                        self.form_expected['get'][success_fail],
+                        assert_message + ' test form')
+
+        self._test_action(response,
+                          self.action_expected['get'][success_fail],
+                          assert_message + ' test action')
+
+        self._test_message(response,
+                           self.message_expected['get'][success_fail],
+                           assert_message + ' test message')
+
+    def _test_post(self, response, success_fail, assert_message=''):
         self.assertEquals(response.status_code,
-                          self.status_code_expected['post']['success'],
+                          self.status_code_expected['post'][success_fail],
                           assert_message + ' test status_code')
-        self._test_template(response, self.template_expected['post']['success'], assert_message + ' test template')
-        self.assertEquals(self.form_expected_valid['post']['success'], self.form_expected_valid_expected['post']['success'], assert_message + ' test form_valid')
-        self._test_form(response, self.form_expected['post']['success'], assert_message + ' test form')
-        self._test_action(response, self.action_expected['post']['success'], assert_message + ' test action')
-        self._test_message(response, self.message_expected['post']['success'], assert_message + ' test message')
+
+        self._test_template(response,
+                            self.template_expected['post'][success_fail],
+                            assert_message + ' test template')
+
+        self.assertEquals(self.form_expected_valid['post'][success_fail],
+                          self.form_expected_valid_expected['post'][success_fail],
+                          assert_message + ' test form_valid')
+
+        self._test_form(response,
+                        self.form_expected['post'][success_fail],
+                        assert_message + ' test form')
+
+        self._test_action(response,
+                          self.action_expected['post'][success_fail],
+                          assert_message + ' test action')
+
+        self._test_message(response,
+                           self.message_expected['post'][success_fail],
+                           assert_message + ' test message')
 
     # ======================================================================

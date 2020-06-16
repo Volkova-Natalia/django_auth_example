@@ -19,7 +19,7 @@ class BaseLoginTestCase(CommonTestCase):
         },
         'post': {
             'success': status.HTTP_200_OK,
-            'fail': None,   # TODO
+            'fail': status.HTTP_400_BAD_REQUEST,
         }
     }
 
@@ -64,7 +64,7 @@ class BaseLoginTestCase(CommonTestCase):
         },
         'post': {
             'success': True,
-            'fail': None,
+            'fail': False,
         }
     }
 
@@ -109,28 +109,28 @@ class BaseLoginTestCase(CommonTestCase):
         response = super().get(self.url)
         return response
 
-    # def post(self, user=None):
     def post(self):
-        # response = super().post(self.url, user)
         response = super().post(self.url, self.user)
         return response
 
     # ======================================================================
 
-    def _test_get(self, response, assert_message=''):
-        assert_message = assert_message + ' login GET'
-        super()._test_get(response, assert_message)
+    def _test_get(self, response, success_fail, assert_message=''):
+        assert_message = assert_message + ' ' + success_fail + ' login GET'
+        super()._test_get(response, success_fail, assert_message)
 
-    def _test_post(self, response, assert_message=''):
-        assert_message = assert_message + ' login POST'
-        # self.form_expected['post'] = self.form_expected['post'](self.user)
-        self.form_expected['post']['success'] = LoginForm(self.user)
-        # self.form_valid_expected['post'] = self.form_expected['post'].is_valid()
-        self.form_expected_valid['post']['success'] = self.form_expected['post']['success'].is_valid()
-        super()._test_post(response, assert_message)
+    def _test_post(self, response, success_fail, assert_message=''):
+        assert_message = assert_message + ' ' + success_fail + ' login POST'
+        self.form_expected['post'][success_fail] = LoginForm(self.user)
+        self.form_expected_valid['post'][success_fail] = self.form_expected['post'][success_fail].is_valid()
+        super()._test_post(response, success_fail, assert_message)
 
-        user = authenticate(username=self.user['username'], password=self.user['password'])
-        self.assertNotEquals(user, None, assert_message + ' test user')
-        self.assertEquals(user.is_active, True, assert_message + ' test user.is_active')
+        if success_fail == 'success':
+            user = authenticate(username=self.user['username'], password=self.user['password'])
+            self.assertNotEquals(user, None, assert_message + ' test user')
+            self.assertEquals(user.is_active, True, assert_message + ' test user.is_active')
+        elif success_fail == 'fail':
+            user = authenticate(username=self.user['username'], password=self.user['password'])
+            self.assertEquals(user, None, assert_message + ' test user')
 
     # ======================================================================

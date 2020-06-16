@@ -1,10 +1,8 @@
 from django.test import TestCase
-from django.test.client import Client
-from rest_framework import status
-from django.shortcuts import render
-from django.urls import reverse
 
-from ...urls import namespace
+from .base.logout import BaseLogoutTestCase
+
+from django.contrib.auth.models import User
 
 
 # Create your tests here.

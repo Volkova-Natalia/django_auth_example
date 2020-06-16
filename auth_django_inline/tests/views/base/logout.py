@@ -1,7 +1,6 @@
 from rest_framework import status
 from django.urls import reverse
 
-# from .common import IntegrationCommonTestCase
 from ..common import CommonTestCase
 
 from ....urls import namespace
@@ -60,21 +59,19 @@ class BaseLogoutTestCase(CommonTestCase):
         response = super().get(self.url)
         return response
 
-    # def post(self, user=None):
     def post(self):
-        # response = super().post(self.url, user)
         response = super().post(self.url, self.user)
         return response
 
     # ======================================================================
 
-    def _test_get(self, response, assert_message=''):
-        assert_message = assert_message + ' logout GET'
-        # super()._test_get(response, assert_message)
+    def _test_get(self, response, success_fail, assert_message=''):
+        assert_message = assert_message + ' ' + success_fail + ' logout GET'
+        # super()._test_get(response, success_fail, assert_message)
 
-    def _test_post(self, response, assert_message=''):
-        assert_message = assert_message + ' logout POST'
-        # super()._test_post(response, assert_message)
+    def _test_post(self, response, success_fail, assert_message=''):
+        assert_message = assert_message + ' ' + success_fail + ' logout POST'
+        # super()._test_post(response, success_fail, assert_message)
         # TODO
 
     # ======================================================================

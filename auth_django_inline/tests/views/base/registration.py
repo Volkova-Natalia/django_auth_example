@@ -1,14 +1,10 @@
-from django.test import TestCase
-from django.test.client import Client
 from rest_framework import status
-from django.shortcuts import render
 from django.urls import reverse
 
 from ..common import CommonTestCase
 
 from ....urls import namespace
 from ....forms import RegistrationForm
-from django.contrib.auth.models import User
 
 
 # Create your tests here.
@@ -22,7 +18,7 @@ class BaseRegistrationTestCase(CommonTestCase):
         },
         'post': {
             'success': status.HTTP_200_OK,
-            'fail': None,   # TODO
+            'fail': status.HTTP_400_BAD_REQUEST,
         }
     }
 
@@ -67,7 +63,7 @@ class BaseRegistrationTestCase(CommonTestCase):
         },
         'post': {
             'success': True,
-            'fail': None,
+            'fail': False,
         }
     }
 
@@ -98,10 +94,10 @@ class BaseRegistrationTestCase(CommonTestCase):
 
     def __init__(self, user=None, *args, **kwargs):
         super().__init__(user=user, *args, **kwargs)
-        # self.form_expected['post'] = self.form_expected['post'](self.user)
         self.form_expected['post']['success'] = RegistrationForm(self.user)
-        # self.form_valid_expected['post'] = self.form_expected['post'].is_valid()
         self.form_expected_valid['post']['success'] = self.form_expected['post']['success'].is_valid()
+        self.form_expected['post']['fail'] = RegistrationForm(self.user)
+        self.form_expected_valid['post']['fail'] = self.form_expected['post']['fail'].is_valid()
 
     # ======================================================================
 
@@ -121,20 +117,18 @@ class BaseRegistrationTestCase(CommonTestCase):
         response = super().get(self.url)
         return response
 
-    # def post(self, user=None):
     def post(self):
-        # response = super().post(self.url, user)
         response = super().post(self.url, self.user)
         return response
 
     # ======================================================================
 
-    def _test_get(self, response, assert_message=''):
-        assert_message = assert_message + ' registration GET'
-        super()._test_get(response, assert_message)
+    def _test_get(self, response, success_fail, assert_message=''):
+        assert_message = assert_message + ' ' + success_fail + ' registration GET'
+        super()._test_get(response, success_fail, assert_message)
 
-    def _test_post(self, response, assert_message=''):
-        assert_message = assert_message + ' registration POST'
-        super()._test_post(response, assert_message)
+    def _test_post(self, response, success_fail, assert_message=''):
+        assert_message = assert_message + ' ' + success_fail + ' registration POST'
+        super()._test_post(response, success_fail, assert_message)
 
     # ======================================================================
