@@ -14,15 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from auth_django_inline import views
+from .settings import app_name, end_point
+from . import views
 
-app_name = 'auth_django_inline'
-base_url = 'auth-django-inline/'
-namespace = 'auth-django-inline'
+
+app_name = app_name
 urlpatterns = [
     path('', views.home, name='home'),
 
-    path('registration/', views.Registration.as_view(), name='registration'),
-    path('login/', views.Login.as_view(), name='login'),
-    path('logout/', views.Logout.as_view(), name='logout'),
+    path(end_point['registration']['url'], views.Registration.as_view(), name=end_point['registration']['name']),
+    path(end_point['login']['url'], views.Login.as_view(), name=end_point['login']['name']),
+    path(end_point['logout']['url'], views.Logout.as_view(), name=end_point['logout']['name']),
 ]

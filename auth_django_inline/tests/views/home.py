@@ -4,7 +4,7 @@ from rest_framework import status
 from django.shortcuts import render
 from django.urls import reverse
 
-from ...urls import namespace
+from ...settings import namespace
 
 
 # Create your tests here.

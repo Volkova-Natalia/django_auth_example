@@ -1,0 +1,18 @@
+{% extends "auth_django_inline/base.html" %}
+
+{% block title %}
+  {{ action }}
+{% endblock %}
+
+{% block body_content %}
+  <h3>Hello Django!</h3>
+  <p>It is <b>django_auth_example</b> project.</p>
+  <p>Application <b>auth_django_inline</b>.</p>
+
+  <form action="." method="post">
+    {% csrf_token %}
+    <input type="submit" value={{ action }}>
+  </form>
+
+  {{ message }}
+{% endblock %}

@@ -31,7 +31,7 @@ class Login(APIView):
                           {
                               'form': form,
                               'action': 'login',
-                              'message': 'You successfully logged.'
+                              'message': 'You successfully logged in.'
                           },
                           status=status.HTTP_200_OK)
         else:

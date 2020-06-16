@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from ..common import CommonTestCase
 
-from ....urls import namespace
+from ....settings import namespace
 from ....forms import RegistrationForm
 
 

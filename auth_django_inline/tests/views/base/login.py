@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 
 from ..common import CommonTestCase
 
-from ....urls import namespace
+from ....settings import namespace
 from ....forms import LoginForm
 
 
@@ -86,7 +86,7 @@ class BaseLoginTestCase(CommonTestCase):
             'fail': None,
         },
         'post': {
-            'success': 'You successfully logged.',
+            'success': 'You successfully logged in.',
             'fail': None,
         }
     }

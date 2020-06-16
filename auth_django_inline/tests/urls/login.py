@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 
-from ...urls import base_url, namespace, app_name
+from ...settings import base_url, namespace, app_name
 
 
 # Create your tests here.

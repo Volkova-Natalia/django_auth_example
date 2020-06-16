@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from auth_django_inline.urls import (
+from auth_django_inline.settings import (
     base_url as auth_django_inline_base_url,
     namespace as auth_django_inline_namespace
 )
