@@ -10,6 +10,21 @@ from ....settings import namespace
 class BaseLogoutTestCase(CommonTestCase):
     url = reverse(namespace + ':logout')
 
+    """
+    Only for logout - redirect.
+    """
+    _response_url_expected = reverse(namespace + ':login') + '?next=' + url
+    response_url_expected = {
+        'get': {
+            'success': None,
+            'fail': _response_url_expected,
+        },
+        'post': {
+            'success': None,
+            'fail': _response_url_expected,
+        }
+    }
+
     status_code_expected = {
         'get': {
             'success': status.HTTP_200_OK,
@@ -116,6 +131,11 @@ class BaseLogoutTestCase(CommonTestCase):
     def _test_get(self, response, success_fail, assert_message=''):
         assert_message = assert_message + ' ' + success_fail + ' logout GET'
         super()._test_get(response, success_fail, assert_message)
+
+        if success_fail == 'fail':
+            self.assertEquals(response.url,
+                              self.response_url_expected['get'][success_fail],
+                              assert_message + ' response.url')
 
     def _test_post(self, response, success_fail, assert_message=''):
         assert_message = assert_message + ' ' + success_fail + ' logout POST'
