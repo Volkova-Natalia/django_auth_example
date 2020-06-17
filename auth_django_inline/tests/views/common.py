@@ -128,7 +128,7 @@ class CommonTestCase(TestCase):
     def client_logout(self, client=None, user={'username': '', 'password': ''}):
         if not client:
             client = Client()
-        logout = client.logout(username=user['username'], password=user['password'])
+        logout = client.logout()
         return client, logout
 
     # ======================================================================

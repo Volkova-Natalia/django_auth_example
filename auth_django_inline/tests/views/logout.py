@@ -53,6 +53,19 @@ class LogoutTestCase(TestCase):
 
     # ----- POST -----
 
+    def test_post_successful_clean(self):
+        self._create_user(user=self.registered_user)
+        logout = BaseLogoutTestCase(user=self.registered_user)
+        client, client_login = logout.client_login(client=None, user=self.registered_user)
+        client, response = logout.post(client=client)
+        client, client_logout = logout.client_logout(client=None, user=self.registered_user)
+        logout._test_post(response, success_fail='success', assert_message='views')
+
+    def test_post_login_required_clean(self):
+        logout = BaseLogoutTestCase(user=self.registered_user)
+        client, response = logout.post(client=None)
+        logout._test_post(response, success_fail='fail', assert_message='views')
+
     # ======================================================================
     # dirty
     # ======================================================================

@@ -40,11 +40,11 @@ class BaseLogoutTestCase(CommonTestCase):
     template_expected = {
         'get': {
             'success': _template_expected,
-            'fail': None,   # TODO
+            'fail': None,
         },
         'post': {
             'success': _template_expected,
-            'fail': _template_expected,
+            'fail': None,
         }
     }
 
@@ -140,5 +140,14 @@ class BaseLogoutTestCase(CommonTestCase):
     def _test_post(self, response, success_fail, assert_message=''):
         assert_message = assert_message + ' ' + success_fail + ' logout POST'
         super()._test_post(response, success_fail, assert_message)
+
+        if success_fail == 'success':
+            pass
+            # TODO check that the user is offline
+        elif success_fail == 'fail':
+            self.assertEquals(response.url,
+                              self.response_url_expected['post'][success_fail],
+                              assert_message + ' response.url')
+            # TODO check that the user is online
 
     # ======================================================================
