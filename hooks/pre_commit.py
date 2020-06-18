@@ -1,17 +1,24 @@
-# with open(r'.git/hooks/pre-commit', 'tw') as file:
-#     file.write(r"""#!/bin/sh
+# import os
+# from dotenv import load_dotenv
+#
+# load_dotenv()
+# APPLICATION_ENVIRONMENT = os.getenv('APPLICATION_ENVIRONMENT')
+#
+# if APPLICATION_ENVIRONMENT == 'local':
+#     with open(r'.git/hooks/pre-commit', 'tw') as file:
+#         file.write(r"""#!/bin/sh
 # git stash -q --keep-index
 # source venv/Scripts/activate
 # ./manage.py test
 # RESULT=$?
+#
+# deactivate
 #
 # [ $RESULT -ne 0 ] && echo "
 # ------------------
 # Result: FAIL TESTS
 # ------------------
 # "
-#
-# deactivate
 #
 # git stash pop -q
 # [ $RESULT -ne 0 ] && exit 1
