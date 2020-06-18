@@ -22,7 +22,7 @@ class BaseRegistrationTestCase(CommonTestCase):
         }
     }
 
-    _template_expected = 'auth_django_inline/__registration.html'
+    _template_expected = 'auth_django_inline/registration.html'
     template_expected = {
         'get': {
             'success': _template_expected,
