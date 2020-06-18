@@ -14,7 +14,7 @@ import os
 from dotenv import load_dotenv
 from distutils.util import strtobool
 
-from hooks.pre_commit import *
+from hooks import *
 
 # print(__file__)
 
