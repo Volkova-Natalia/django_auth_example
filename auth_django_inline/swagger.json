@@ -35,7 +35,7 @@
         "tags": [
           "registration"
         ],
-        "summary": "Get registration",
+        "summary": "Get registration form",
         "operationId": "Registration.get",
         "description": "Get registration form",
         "parameters": [],
@@ -45,6 +45,60 @@
             "content": {
               "text/html;charset=utf-8": {}
             }
+          }
+        }
+      }
+    },
+
+
+
+    "/login/": {
+
+      "x-name": "login",
+
+      "get": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Get login form",
+        "operationId": "Login.get",
+        "description": "Get login form",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "login form",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          }
+        }
+      }
+    },
+
+
+
+    "/logout/": {
+
+      "x-name": "logout",
+
+      "get": {
+        "tags": [
+          "logout"
+        ],
+        "summary": "Get logout button",
+        "operationId": "Logout.get",
+        "description": "Get logout button",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "logout button",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          },
+          "302": {
+            "description": "login required",
+            "content": {}
           }
         }
       }
