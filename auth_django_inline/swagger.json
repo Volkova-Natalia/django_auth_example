@@ -1,0 +1,59 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "auth_django_inline",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000/auth-django-inline"
+    }
+  ],
+
+  "tags": [
+    {
+      "name": "registration"
+    },
+    {
+      "name": "login"
+    },
+    {
+      "name": "logout"
+    }
+  ],
+
+
+
+
+  "paths": {
+
+    "/registration/": {
+
+      "x-name": "registration",
+
+      "get": {
+        "tags": [
+          "registration"
+        ],
+        "summary": "Get registration",
+        "operationId": "Registration.get",
+        "description": "Get registration form",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "registration form",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          }
+        }
+      }
+    }
+  },
+
+
+
+  "components": {
+    "schemas": {}
+  }
+}

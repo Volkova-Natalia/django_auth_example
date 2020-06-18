@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.views.generic import TemplateView
 from .settings import app_name, end_point
 from . import views
 
@@ -25,4 +26,9 @@ urlpatterns = [
     path(end_point['registration']['url'], views.Registration.as_view(), name=end_point['registration']['name']),
     path(end_point['login']['url'], views.Login.as_view(), name=end_point['login']['name']),
     path(end_point['logout']['url'], views.Logout.as_view(), name=end_point['logout']['name']),
+
+    path('swagger/expected/',
+         TemplateView.as_view(template_name=app_name+'/swagger/index.html',
+                              extra_context={'app_name': app_name}),
+         name='swagger-expected'),
 ]
