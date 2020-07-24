@@ -29,6 +29,7 @@ class Logout(APIView):
     def post(self, request, *args, **kwargs):
         print('\nLogout')
         print(request.data)
+        print(request.COOKIES)
         logout(request)
         return render(request,
                       'auth_django_inline/logout.html',

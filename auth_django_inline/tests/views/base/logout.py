@@ -123,7 +123,7 @@ class BaseLogoutTestCase(CommonTestCase):
         return client, response
 
     def post(self, client=None):
-        client, response = super().post(client=client, url=self.url, data=self.user)
+        client, response = super().post(client=client, url=self.url, data=None)
         return client, response
 
     # ======================================================================
