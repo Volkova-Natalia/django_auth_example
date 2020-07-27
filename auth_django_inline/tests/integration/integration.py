@@ -25,10 +25,10 @@ class IntegrationTestCase(TestCase):
         pass
 
     # ======================================================================
-    # clean
+    # success
     # ======================================================================
 
-    def test_registration_login_logout_clean(self):
+    def test_registration_login_logout_success(self):
         registration = IntegrationRegistrationTestCase(user=self.test_user)
         login = IntegrationLoginTestCase(user=self.test_user)
         logout = IntegrationLogoutTestCase(user=self.test_user)
@@ -44,7 +44,7 @@ class IntegrationTestCase(TestCase):
         logout.test()
 
     # ======================================================================
-    # dirty
+    # fail
     # ======================================================================
 
     # ======================================================================
