@@ -136,28 +136,28 @@ class CommonTestCase(TestCase):
     def _test_template(self, response, template_expected, assert_message=None):
         try:
             template = response.templates[0].name
-        except:
+        except (AttributeError, NameError, TypeError, ValueError, Exception):
             template = None
         self.assertEquals(template, template_expected, assert_message)
 
     def _test_form(self, response, form_expected, assert_message=None):
         try:
             form = response.context['form']
-        except:
+        except (AttributeError, NameError, TypeError, ValueError, Exception):
             form = None
         self.assertEquals(str(form), str(form_expected), assert_message)
 
     def _test_action(self, response, action_expected, assert_message=None):
         try:
             action = response.context['action']
-        except:
+        except (AttributeError, NameError, TypeError, ValueError, Exception):
             action = None
         self.assertEquals(action, action_expected, assert_message)
 
     def _test_message(self, response, message_expected, assert_message=None):
         try:
             message = response.context['message']
-        except:
+        except (AttributeError, NameError, TypeError, ValueError, Exception):
             message = None
         self.assertEquals(message, message_expected, assert_message)
 
