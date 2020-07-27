@@ -47,6 +47,41 @@
             }
           }
         }
+      },
+
+
+      "post": {
+        "tags": [
+          "registration"
+        ],
+        "summary": "registration",
+        "operationId": "Registration.post",
+        "description": "registration",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/username_password"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User registered",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          }
+        }
       }
     },
 
@@ -67,6 +102,41 @@
         "responses": {
           "200": {
             "description": "login form",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          }
+        }
+      },
+
+
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "login",
+        "operationId": "Login.post",
+        "description": "login",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/username_password"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          },
+          "400": {
+            "description": "Invalid input",
             "content": {
               "text/html;charset=utf-8": {}
             }
@@ -101,6 +171,33 @@
             "content": {}
           }
         }
+      },
+
+      "post": {
+        "tags": [
+          "logout"
+        ],
+        "summary": "logout",
+        "operationId": "Logout.post",
+        "description": "logout",
+        "parameters": [],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "User logged out",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          },
+          "302": {
+            "description": "Login required",
+            "content": {
+              "text/html;charset=utf-8": {}
+            }
+          }
+        }
       }
     }
   },
@@ -108,6 +205,26 @@
 
 
   "components": {
-    "schemas": {}
+    "schemas": {
+
+      "username_password": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 150,
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      }
+}
   }
 }
