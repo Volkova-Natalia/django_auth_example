@@ -34,50 +34,52 @@ class LogoutTestCase(TestCase):
         user.save()
 
     # ======================================================================
-    # clean
+    # success
     # ======================================================================
 
     # ----- GET -----
 
-    def test_get_successful_clean(self):
+    def test_get_success(self):
+        success_fail = 'success'
+
         self._create_user(self.registered_user)
         logout = BaseLogoutTestCase()
         client, client_login = logout.client_login(client=None, user=self.registered_user)
         client, response = logout.get(client=client)
-        logout._test_get(response, success_fail='success', assert_message='views')
-
-    def test_get_login_required_clean(self):
-        logout = BaseLogoutTestCase()
-        client, response = logout.get(client=None)
-        logout._test_get(response, success_fail='fail', assert_message='views')
+        logout._test_get(response, success_fail=success_fail, assert_message='views')
 
     # ----- POST -----
 
-    def test_post_successful_clean(self):
+    def test_post_success(self):
+        success_fail = 'success'
+
         self._create_user(user=self.registered_user)
         logout = BaseLogoutTestCase(user=self.registered_user)
         client, client_login = logout.client_login(client=None, user=self.registered_user)
         client, response = logout.post(client=client)
         client, client_logout = logout.client_logout(client=None, user=self.registered_user)
-        logout._test_post(response, success_fail='success', assert_message='views')
-
-    def test_post_login_required_clean(self):
-        logout = BaseLogoutTestCase(user=self.registered_user)
-        client, response = logout.post(client=None)
-        logout._test_post(response, success_fail='fail', assert_message='views')
+        logout._test_post(response, success_fail=success_fail, assert_message='views')
 
     # ======================================================================
-    # dirty
+    # fail
     # ======================================================================
 
     # ----- GET -----
 
-    def test_get_dirty(self):
-        pass
+    def test_get_login_required_fail(self):
+        success_fail = 'fail'
+
+        logout = BaseLogoutTestCase()
+        client, response = logout.get(client=None)
+        logout._test_get(response, success_fail=success_fail, assert_message='views')
 
     # ----- POST -----
 
-    def test_post_dirty(self):
-        pass
+    def test_post_login_required_fail(self):
+        success_fail = 'fail'
+
+        logout = BaseLogoutTestCase(user=self.registered_user)
+        client, response = logout.post(client=None)
+        logout._test_post(response, success_fail=success_fail, assert_message='views')
 
     # ======================================================================
