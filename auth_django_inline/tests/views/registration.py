@@ -34,19 +34,23 @@ class RegistrationTestCase(TestCase):
         user.save()
 
     # ======================================================================
-    # clean
+    # success
     # ======================================================================
 
     # ----- GET -----
 
-    def test_get_clean(self):
+    def test_get_success(self):
+        success_fail = 'success'
+
         registration = BaseRegistrationTestCase()
         client, response = registration.get(client=None)
-        registration._test_get(response, success_fail='success', assert_message='views')
+        registration._test_get(response, success_fail=success_fail, assert_message='views')
 
     # ----- POST -----
 
-    def test_post_successful_clean(self):
+    def test_post_success(self):
+        success_fail = 'success'
+
         self._create_user(self.registered_user)
 
         data_post = self.registered_user.copy()
@@ -55,7 +59,7 @@ class RegistrationTestCase(TestCase):
 
         registration = BaseRegistrationTestCase(data_post)
         client, response = registration.post(client=None)
-        registration._test_post(response, success_fail='success', assert_message='views')
+        registration._test_post(response, success_fail=success_fail, assert_message='views')
 
         count_users_expected = 2
         count_users = User.objects.count()
@@ -69,7 +73,20 @@ class RegistrationTestCase(TestCase):
                 self.assertNotEquals(getattr(user, field), data_post[field])
                 self.assertEquals(user.check_password(data_post[field]), True)
 
-    def test_post_user_exists_clean(self):
+    # ======================================================================
+    # fail
+    # ======================================================================
+
+    # ----- GET -----
+
+    def test_get_fail(self):
+        pass
+
+    # ----- POST -----
+
+    def test_post_user_exists_fail(self):
+        success_fail = 'fail'
+
         self._create_user(self.registered_user)
 
         data_post = self.registered_user.copy()
@@ -77,24 +94,10 @@ class RegistrationTestCase(TestCase):
 
         registration = BaseRegistrationTestCase(data_post)
         client, response = registration.post(client=None)
-        registration._test_post(response, success_fail='fail', assert_message='views')
+        registration._test_post(response, success_fail=success_fail, assert_message='views')
 
         count_users_expected = 1
         count_users = User.objects.count()
         self.assertEquals(count_users, count_users_expected)
-
-    # ======================================================================
-    # dirty
-    # ======================================================================
-
-    # ----- GET -----
-
-    def test_get_dirty(self):
-        pass
-
-    # ----- POST -----
-
-    def test_post_dirty(self):
-        pass
 
     # ======================================================================
